@@ -1,6 +1,5 @@
 package com.eunbi.oauthjwt.dto;
 
-import java.io.Serializable;
 import java.util.Map;
 
 public class NaverResponse implements OAuth2Response {
