@@ -1,5 +1,7 @@
 package com.eunbi.oauthjwt.config;
 
+import com.eunbi.oauthjwt.jwt.JWTUtil;
+import com.eunbi.oauthjwt.oauth2.CustomSuccessHandler;
 import com.eunbi.oauthjwt.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomSuccessHandler customSuccessHandler;
+    private final JWTUtil  jwtUtil;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
@@ -35,7 +39,8 @@ public class SecurityConfig {
         http
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-                                .userService(customOAuth2UserService)));
+                                .userService(customOAuth2UserService))
+                        .successHandler(customSuccessHandler));
 
         //경로별 인가 작업
         http
